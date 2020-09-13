@@ -7,7 +7,7 @@ urlpatterns = [
 
     #Essa url vai ser a página de home ou seja a /
     #O argumento name pode ser utilizado para chamar essa view em outro lugar do projeto
-    path('', views.taskList, name='task-list' ),
+    path('', views.taskList, name='task-list'),
 
     #Nessa url passamos um parâmetro pela urll
     path('yourname/<str:name>', views.yourName, name='your-name'),
