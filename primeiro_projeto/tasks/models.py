@@ -1,5 +1,6 @@
 from django.db import models
-
+#Pegar o model do usuário
+from django.contrib.auth import get_user_model
 
 class Task(models.Model):
     STATUS = (
@@ -14,6 +15,8 @@ class Task(models.Model):
         max_length=5,
         choices=STATUS,
     )
+    #Atelamos o model do usuário a tarefa, ao deletar o usuário todas as tarefas vão ser deletadas
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     # Esse código serve para toda vez que um registro for inserido fique registrado a data
     created_at = models.DateTimeField(auto_now_add=True)
     # Esse código serve para toda vez que um registro for alterado fique registrado a data

@@ -23,12 +23,12 @@ def taskList(request):
     search = request.GET.get('search')
     #Se tiver o caminho pesquisado
     if search:
-        #A variável vai ser preenchida pelo que vier no search ignorando o case sentive
-        tasks = Task.objects.filter(title__icontains=search)
+        #A variável vai ser preenchida pelo que vier no search ignorando o case sentive, e respeitando as tarefas interligadas com o usuário
+        tasks = Task.objects.filter(title__icontains=search, user=request.user)
     #Se não tiver eu continuo mostrando a paginação padrão
     else:
-        # Com essa variavel eu pego todos os objetos do model Task
-        tasks_list = Task.objects.all().order_by('-created_at')
+        # Com essa variavel eu pego todos os objetos do model Task, filtrando pelo usuário
+        tasks_list = Task.objects.all().order_by('-created_at').filter(user=request.user)
         #Vai ser exibido 3 registros por página
         paginator = Paginator(tasks_list, 3)
         # Essa variável vai pegar a página atual. Por exemplo a página 3
@@ -59,6 +59,7 @@ def newTask(request):
         # Se os dados do formulário forem validos ele salva no banco e redireciona para a página inicial
         if form.is_valid():
             task = form.save(commit=False)
+            task.user = request.user
             task.done = 'doing'
             task.save()
             messages.info(request, 'Tarefa salva com sucesso.')
