@@ -14,4 +14,8 @@ urlpatterns = [
 
     #Essa url é utilizada para acessar uma view com os dados da tarefa referente ao id passado por parâmetro
     path('task/<int:id>', views.taskView, name='task-view'),
+
+    # Essa url é utilizada para acessar uma view para inserir uma nova tarefa
+    path('newtask/', views.newTask, name='new-task'),
+
 ]
