@@ -59,7 +59,7 @@ ROOT_URLCONF = 'primeiro_projeto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,3 +125,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#Quando o usuário faz login vai cair na sua lista de tarefas
+LOGIN_REDIRECT_URL = '/'
+
+#Quando o usuário faz logout vai cair na página de login
+LOGOUT_REDIRECT_URL = '/accounts/login'

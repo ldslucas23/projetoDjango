@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+#Esse pacote é utilizado para autenticação. Exemplo controlar páginas que necessitam de login
+from django.contrib.auth.decorators import login_required
 #Esse pacote é utilizado para paginar registros na tela
 from django.core.paginator import Paginator
 #Esse pacote é responsavel por criar formulaŕios com os registros na tela
@@ -14,7 +16,7 @@ from .models import Task
 def helloWorld(request):
     return HttpResponse('Hello World')
 
-
+@login_required()
 def taskList(request):
 
     # Nessa variavel recebo o parâmetro de pesquisa pelo front. Esse search é o name do meu input de busca no html
@@ -42,12 +44,14 @@ def yourName(request, name):
 
 
 # Nessa view ele pega os dados de uma tarefa que recebeu o id pelo parâmetro e exibe na página task.html
+@login_required
 def taskView(request, id):
     #Preenchemos essa variável com o model e a primare key, se não achar o objeto ele da um 404 para o usuário
     task = get_object_or_404(Task, pk=id)
     return render(request, 'tasks/task.html', {'task': task})
 
 # Nessa view ele recebe uma request para redirecionar a paǵina addTask.html para adição de um novo registro
+@login_required
 def newTask(request):
     # Se vier um post, a gente salva os dados, esse if é chamado quando o formulário é salvo
     if request.method == 'POST':
@@ -66,6 +70,7 @@ def newTask(request):
         return render(request, 'tasks/addTask.html', {'form': form})
 
 # Nessa view ele recebe uma request para redirecionar a paǵina editTask.html para alterar um registro
+@login_required
 def editTask(request, id):
     task = get_object_or_404(Task, pk=id)
     #Essa variavel ajuda a pré-popular o formulário para podermos editar
@@ -91,6 +96,7 @@ def editTask(request, id):
         return render(request, 'tasks/edittask.html', {'form': form, 'task': task})
 
 # Nessa view ele recebe uma request para redirecionar a paǵina para deletar um registro
+@login_required
 def deleteTask(request, id):
     task = get_object_or_404(Task, pk=id)
     task.delete()

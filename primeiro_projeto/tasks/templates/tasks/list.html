@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
-{% block title %}Lista de tarefas{% endblock %}
-{% block content %}
+{% extends 'base.html' %} <!-- Extendemos os recursos do template base -->
+{% block title %}Lista de tarefas{% endblock %} <!-- Titulo dinamico -->
+{% block content %} <!-- O que vai ser exibido no corpo da página -->
    <div class="offset-1 col-10 list-div">
        <h1>Lista de tarefas</h1>
        <a id="add-link"href="newtask/">
@@ -16,13 +16,13 @@
        </div>
        {% if messages %}
             <ul class="messages">
-                {% for message in messages %}
+                {% for message in messages %} <!-- Fazemos um for para pegar as mensagens enviadas pela view -->
                     <li {% if message.tags %}class="alert alert-{{message.tags}}"{% endif %}>{{message}}</li>
                 {% endfor%}
             </ul>
        {% endif %}
        <ul class="task-list">
-           {% for task in tasks %}
+           {% for task in tasks %} <!-- Percorremos os dados enviados pela view e dentro desses dados enviamos temos os botões abaixo -->
            <li class="task-item">
                <span><a href="/task/{{task.id}}">{{task.title}}</a></span>
                <a href="delete/{{task.id}}" class="delete-btn"><span><i class="fa fa-trash"></i></span></a>
@@ -30,6 +30,7 @@
            </li>
            {% endfor %}
        </ul>
+       <!-- Aqui fazemos a paginação -->
        <div class="pagination">
            <span class="step-links">
                {% if tasks.has_previous %}

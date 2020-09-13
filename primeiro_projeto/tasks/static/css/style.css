@@ -132,6 +132,12 @@ ul.messages li{
     margin-right: 5px;
 }
 
+/* Botão de sucesso do formulário */
 .btn-success{
     margin-bottom: 5px;
+}
+
+/* Login */
+.auth-card{
+    margin-bottom: 30px;
 }
