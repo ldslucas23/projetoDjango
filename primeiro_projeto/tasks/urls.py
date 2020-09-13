@@ -4,4 +4,11 @@ from . import views
 urlpatterns = [
     #O endereço /helloworld vai cair em uma view
     path('helloworld/', views.helloWorld),
+
+    #Essa url vai ser a página de home ou seja a /
+    #O argumento name pode ser utilizado para chamar essa view em outro lugar do projeto
+    path('', views.taskList, name='task-list' ),
+
+    #Nessa url passamos um parâmetro pela urll
+    path('yourname/<str:name>', views.yourName, name='your-name'),
 ]
