@@ -16,14 +16,23 @@ def helloWorld(request):
 
 
 def taskList(request):
-    # Com essa variavel eu pego todos os objetos do model Task
-    tasks_list = Task.objects.all().order_by('-created_at')
-    #Vai ser exibido 3 registros por página
-    paginator = Paginator(tasks_list, 3)
-    # Essa variável vai pegar a página atual. Por exemplo a página 3
-    page = request.GET.get('page')
-    # Se o usuario estiver na página 3 ele vai exibir 3 registros referente a página que ele está, no exemplo 3 registros da página 3
-    tasks = paginator.get_page(page)
+
+    # Nessa variavel recebo o parâmetro de pesquisa pelo front. Esse search é o name do meu input de busca no html
+    search = request.GET.get('search')
+    #Se tiver o caminho pesquisado
+    if search:
+        #A variável vai ser preenchida pelo que vier no search ignorando o case sentive
+        tasks = Task.objects.filter(title__icontains=search)
+    #Se não tiver eu continuo mostrando a paginação padrão
+    else:
+        # Com essa variavel eu pego todos os objetos do model Task
+        tasks_list = Task.objects.all().order_by('-created_at')
+        #Vai ser exibido 3 registros por página
+        paginator = Paginator(tasks_list, 3)
+        # Essa variável vai pegar a página atual. Por exemplo a página 3
+        page = request.GET.get('page')
+        # Se o usuario estiver na página 3 ele vai exibir 3 registros referente a página que ele está, no exemplo 3 registros da página 3
+        tasks = paginator.get_page(page)
     return render(request, 'tasks/list.html', {'tasks': tasks})
 
 
@@ -88,3 +97,4 @@ def deleteTask(request, id):
 
     messages.info(request, 'Tarefa deletada com sucesso.')
     return redirect('/')
+

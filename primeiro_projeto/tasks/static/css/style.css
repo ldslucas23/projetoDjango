@@ -50,6 +50,7 @@
     position: absolute;
     top: 12px;
     right: 26px;
+    cursor: pointer;
 }
 
 .search-div{
@@ -131,3 +132,6 @@ ul.messages li{
     margin-right: 5px;
 }
 
+.btn-success{
+    margin-bottom: 5px;
+}
