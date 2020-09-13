@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+#Esse pacote é utilizado para paginar registros na tela
+from django.core.paginator import Paginator
+#Esse pacote é responsavel por criar formulaŕios com os registros na tela
 from .forms import TaskForm
 #Esse pacote é utilizado para exibir mensagens para o usuário
 from django.contrib import messages
-
+#Esse pacote é utilizado para pegar os dados de um model específico para poder manipular depois
 from .models import Task
 
 
@@ -14,7 +17,13 @@ def helloWorld(request):
 
 def taskList(request):
     # Com essa variavel eu pego todos os objetos do model Task
-    tasks = Task.objects.all().order_by('-created_at')
+    tasks_list = Task.objects.all().order_by('-created_at')
+    #Vai ser exibido 3 registros por página
+    paginator = Paginator(tasks_list, 3)
+    # Essa variável vai pegar a página atual. Por exemplo a página 3
+    page = request.GET.get('page')
+    # Se o usuario estiver na página 3 ele vai exibir 3 registros referente a página que ele está, no exemplo 3 registros da página 3
+    tasks = paginator.get_page(page)
     return render(request, 'tasks/list.html', {'tasks': tasks})
 
 
