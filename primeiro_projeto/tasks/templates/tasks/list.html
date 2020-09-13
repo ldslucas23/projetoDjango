@@ -11,26 +11,13 @@
            <i class="fa fa-search"></i>
        </div>
        <ul class="task-list">
+           {% for task in tasks %}
            <li class="task-item">
-               <span>Titulo da tarefa</span>
+               <span><a href="/task/{{task.id}}">{{task.title}}</a></span>
                <span><i class="fa fa-trash"></i></span>
                <span><i class="fa fa-edit"></i></span>
            </li>
-           <li class="task-item">
-               <span>Titulo da tarefa</span>
-               <span><i class="fa fa-trash"></i></span>
-               <span><i class="fa fa-edit"></i></span>
-           </li>
-           <li class="task-item">
-               <span>Titulo da tarefa</span>
-               <span><i class="fa fa-trash"></i></span>
-               <span><i class="fa fa-edit"></i></span>
-           </li>
-           <li class="task-item">
-               <span>Titulo da tarefa</span>
-               <span><i class="fa fa-trash"></i></span>
-               <span><i class="fa fa-edit"></i></span>
-           </li>
+           {% endfor %}
        </ul>
    </div>
 {% endblock %}
