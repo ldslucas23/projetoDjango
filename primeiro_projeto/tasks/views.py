@@ -105,3 +105,18 @@ def deleteTask(request, id):
     messages.info(request, 'Tarefa deletada com sucesso.')
     return redirect('/')
 
+# Nessa view ele recebe uma request para redirecionar a paǵina changeStatus.html para alterar o status de uma tarefa
+
+@login_required
+def changeStatus(request, id):
+    task = get_object_or_404(Task, pk=id)
+
+    #Se a tarefa está com o status "Fazendo"
+    if task.done == 'doing':
+        task.done = 'done'
+    else:
+        task.done = 'doing'
+
+    task.save()
+
+    return redirect('/')

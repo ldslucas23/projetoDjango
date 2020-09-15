@@ -21,6 +21,9 @@ urlpatterns = [
     # Essa url é utilizada para acessar uma view para atualizar os dados de uma tarefa
     path('edit/<int:id>', views.editTask, name='edit-task'),
 
+    # Essa url é utilizada para acessar uma view para atualizar os status de feito de uma tarefa
+    path('changestatus/<int:id>', views.changeStatus, name='change-status'),
+
     # Essa url é utilizada para acessar uma view para deletar os dados de uma tarefa
     path('delete/<int:id>', views.deleteTask, name='delete-task'),
 

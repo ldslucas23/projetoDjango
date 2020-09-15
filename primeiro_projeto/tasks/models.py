@@ -5,15 +5,16 @@ from django.contrib.auth import get_user_model
 class Task(models.Model):
     STATUS = (
         ('doing', 'Fazendo'),
-        ('done', 'Feito'),
+        ('done', 'Feito')
     )
 
     # Criando um campo chamado title que recebe char de no máximo 255 de tamanho
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     done = models.CharField(
         max_length=5,
         choices=STATUS,
+        default='doing'
     )
     #Atelamos o model do usuário a tarefa, ao deletar o usuário todas as tarefas vão ser deletadas
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
