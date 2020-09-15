@@ -21,10 +21,15 @@ def taskList(request):
 
     # Nessa variavel recebo o parâmetro de pesquisa pelo front. Esse search é o name do meu input de busca no html
     search = request.GET.get('search')
+    # Nessa variavel recebo o parâmetro de filtro pelo front.
+    filter = request.GET.get('filter')
     #Se tiver o caminho pesquisado
     if search:
         #A variável vai ser preenchida pelo que vier no search ignorando o case sentive, e respeitando as tarefas interligadas com o usuário
         tasks = Task.objects.filter(title__icontains=search, user=request.user)
+    # Se tiver o filtro preenchido vou filtrar pelo status
+    elif filter:
+        tasks = Task.objects.filter(done=filter, user=request.user)
     #Se não tiver eu continuo mostrando a paginação padrão
     else:
         # Com essa variavel eu pego todos os objetos do model Task, filtrando pelo usuário
