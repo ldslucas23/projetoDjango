@@ -10,6 +10,7 @@ from .forms import TaskForm
 from django.contrib import messages
 #Esse pacote é utilizado para pegar os dados de um model específico para poder manipular depois
 from .models import Task
+import datetime
 
 
 # Ao chamar o /helloworld ele vai cair nessa view
@@ -23,6 +24,12 @@ def taskList(request):
     search = request.GET.get('search')
     # Nessa variavel recebo o parâmetro de filtro pelo front.
     filter = request.GET.get('filter')
+    #Variavel para contar o numero de tarefas feitas no utimos 30 dias
+    tasksDoneRencently = Task.objects.filter(done='done', updated_at__gt=datetime.datetime.now()-datetime.timedelta(days=30), user=request.user).count()
+    # Variavel para contar o numero de tarefas feitas
+    tasksDone = Task.objects.filter(done='done', user=request.user).count()
+    # Variavel para contar o numero de tarefas a fazer
+    tasksDoing = Task.objects.filter(done='doing', user=request.user).count()
     #Se tiver o caminho pesquisado
     if search:
         #A variável vai ser preenchida pelo que vier no search ignorando o case sentive, e respeitando as tarefas interligadas com o usuário
@@ -40,7 +47,8 @@ def taskList(request):
         page = request.GET.get('page')
         # Se o usuario estiver na página 3 ele vai exibir 3 registros referente a página que ele está, no exemplo 3 registros da página 3
         tasks = paginator.get_page(page)
-    return render(request, 'tasks/list.html', {'tasks': tasks})
+    return render(request, 'tasks/list.html',
+                  {'tasks': tasks, 'tasksDoneRencently': tasksDoneRencently, 'tasksDone': tasksDone, 'tasksDoing': tasksDoing})
 
 
 # Nessa view ele recebe o name como parâmetro
